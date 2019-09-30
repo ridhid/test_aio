@@ -1,0 +1,11 @@
+dumps
+logs
+*.egg-info
+docker/docker-compose.yml
+docker/Dockerfile
+media
+build
+dists
+venv
+env
+Makefile

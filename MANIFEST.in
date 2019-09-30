@@ -1,0 +1,2 @@
+include README.MD
+recursive-include src *.html *.txt *.sol *.json *.eot *.ttf *.woff *.png

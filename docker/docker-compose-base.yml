@@ -1,0 +1,24 @@
+version: '3.7'
+
+networks:
+  server:
+    name: test_aio_server
+
+services:
+  postgres:
+    container_name: "test_aio_postgres"
+    image: postgres:10-alpine
+    restart: always
+    networks:
+      server:
+    ports:
+      - 5432:5432
+    volumes:
+      - ${DB_PATH:-/srv/test_aiodb}:/var/lib/postgresql/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-test_aio}
+      - POSTGRES_USER=${POSTGRES_USER:-test_aio}
+      - POSTGRES_DB=${POSTGRES_DB:-test_aio}
+      - TZ=${TZ:-Europe/Moscow}

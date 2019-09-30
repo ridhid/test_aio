@@ -1,0 +1,50 @@
+version: '3.7'
+
+networks:
+  server:
+    name: test_aio_server
+  nginx:
+    name: test_aio_nginx
+
+services:
+  nginx:
+    container_name: "test_aio_nginx"
+    image: nginx:1.17.3-alpine
+    restart: always
+    ports:
+      - 81:80
+    volumes:
+      - ${PWD}/config/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ${PWD}/config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${PWD}/logs:/tmp/log
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      nginx:
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    environment:
+      - TZ=${TZ:-Europe/Moscow}
+
+  web:
+    container_name: "test_aio_web"
+    build:
+      context: ${PWD}
+      dockerfile: docker/Dockerfile
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      server:
+      nginx:
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    environment:
+      - TZ=${TZ:-Europe/Moscow}
+      - APP_DSN=${DSN:-postgres://test_aio:test_aio@postgres:5432/test_aio}

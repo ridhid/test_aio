@@ -1,0 +1,12 @@
+[run]
+omit =
+    tests/*
+    setup.py
+    venv/*
+    env/*
+    alembic/*
+    config/*
+branch = True
+[report]
+exclude_lines =
+    pragma: no cover
