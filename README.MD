@@ -5,7 +5,7 @@
 2. метод /currencies пагинация работает так /currencies?page=1&size=1 можно менять size,page
 3. метод /rate/ можно сделать через гет параметр можно без т.е.
     - /rate/{id}/
-    - /rate/?id={id}/
+    - /rate/?id={id}
 4. для загрузки данных 
     1. ``pip install -e .``
     2. ``load_rates`` файл [тут](./app/utils/load/load_rates.py)
